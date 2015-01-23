@@ -2,7 +2,7 @@
 #+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:t
 #+OPTIONS: e:t email:nil f:t inline:t num:t p:nil pri:nil prop:nil
 #+OPTIONS: stat:t tags:t tasks:t tex:t timestamp:t toc:t todo:t |:t
-#+TITLE: README
+#+TITLE: Dotfiles 
 #+DATE: <2015-01-23 Fri>
 #+AUTHOR: Rainer M. Krug
 #+EMAIL: Rainer@krugs.de
@@ -13,3 +13,12 @@
 #+EXCLUDE_TAGS: noexport
 #+CREATOR: Emacs 24.4.1 (Org mode 8.3beta)
 
+
+* Howto
+To use the dotfiles, 
+
+1) tangle the documents. The dotfiles will be created in
+   [[./dotfiles/]]. If the directory does not exist, it will be created
+   automatically.
+2) create in the directory where the dotfiles should be a link to the
+   tangled file in [[./dotfiles/]]

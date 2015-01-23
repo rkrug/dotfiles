@@ -15,10 +15,12 @@
 
 #+PROPERTY: header-args :comments both
 #+PROPERTY: header-args+ :shebang ""
+#+PROPERTY: header-args+ :mkdirp ./dotfiles
+
 
 * .bashrc
 :PROPERTIES:
-:header-args+: :tangle ~/.bashrc
+:header-args+: :tangle ./dotfiles/.bashrc
 :END:
 ** Introduction
 #+begin_src sh 
@@ -270,7 +272,7 @@ cs
 
 * .bash_profile
 :PROPERTIES:
-:header-args+: :tangle ~/.bash_profile
+:header-args+: :tangle ./dotfiles/.bash_profile
 :END:
 
 ** Read .bashrc
