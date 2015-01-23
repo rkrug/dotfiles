@@ -13,7 +13,8 @@
 #+EXCLUDE_TAGS: noexport
 #+CREATOR: Emacs 24.4.1 (Org mode 8.3beta)
 
-#+PROPERTY: header-args :comments both
+#+PROPERTY: header-args  :tangle-mode (identity #o444)
+#+PROPERTY: header-args+ :comments both
 #+PROPERTY: header-args+ :shebang ""
 #+PROPERTY: header-args+ :mkdirp ./dotfiles
 
@@ -260,15 +261,6 @@ alias cs='cowsay -f "$(ls -1 /usr/local/share/cows/ | rl --count=1)" "$(fortune 
 cs
 #+end_src
 
-** File local variables for the tangled file
-#+begin_src sh  :comments org
-## Local Variables:
-## buffer-read-only: t
-## eval:: (auto-revert-mode)
-## End:
-
-#+end_src
-
 
 * .bash_profile
 :PROPERTIES:
@@ -282,11 +274,4 @@ if [ -f ~/.bashrc ]; then
    source ~/.bashrc
 fi
 #+end_src
-** File local variables for the tangled file
-#+begin_src sh :comments org
-## Local Variables:
-## buffer-read-only: t
-## eval:: (auto-revert-mode)
-## End:
 
-#+end_src
