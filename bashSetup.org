@@ -1,0 +1,290 @@
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:t
+#+OPTIONS: e:t email:nil f:t inline:t num:t p:nil pri:nil prop:nil
+#+OPTIONS: stat:t tags:t tasks:t tex:t timestamp:t toc:t todo:t |:t
+#+TITLE: bashrc
+#+DATE: <2015-01-23 Fri>
+#+AUTHOR: Rainer M. Krug
+#+EMAIL: Rainer@krugs.de
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 24.4.1 (Org mode 8.3beta)
+
+#+PROPERTY: header-args :comments both
+#+PROPERTY: header-args+ :shebang ""
+
+* .bashrc
+:PROPERTIES:
+:header-args+: :tangle ~/.bashrc
+:END:
+** Introduction
+#+begin_src sh 
+############################################################
+############################################################
+##### This file is only read by non-login shell        #####
+##### but sourced from .bash_profile for login shells  #####
+#####                                                  #####
+##### see http://hayne.net/MacDev/Notes/unixFAQ.html#shellStartup
+##### and http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html
+##### for details                                      #####
+############################################################
+############################################################
+#+end_src
+** Language specific settings
+#+begin_src sh
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+#+end_src
+
+** Homebrew 
+*** GITHUB_API_TOKEN
+#+begin_src sh
+export HOMEBREW_GITHUB_API_TOKEN=6fb92887ac7d8317656501ec1193e05e0f360d01
+#+end_src
+*** bash completion
+#+begin_src sh
+source `brew --repository`/Library/Contributions/brew_bash_completion.sh
+#+end_src
+
+*** set path to have homebrew paths before system paths
+#+begin_src sh
+export PATH=/usr/local/sbin:$PATH
+export PATH=/usr/local/bin:$PATH
+#+end_src
+
+*** gcc
+Add /usr/local/include to the include paths for gcc. See [[http://stackoverflow.com/questions/558803/how-to-add-a-default-include-path-for-gcc-in-linux][Stackoverflow]]
+for details.
+
+#+begin_src sh
+export C_INCLUDE_PATH=C_INCLUDE_PATH:/usr/local/include
+export CPLUS_INCLUDE_PATH=C_INCLUDE_PATH:/usr/local/include
+#+end_src
+
+
+*** homebrew - gdal-grass
+## ==> Caveats
+## This formula provides a plugin that allows GDAL and OGR to access geospatial
+## data stored using the GRASS vector and raster formats. In order to use the
+## plugin, you will need to add the following path to the GDAL_DRIVER_PATH
+## enviroment variable:
+##   /usr/local/lib/gdalplugins
+
+#+begin_src sh
+export GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins
+#+end_src
+
+*** grass 7
+make grass 7 startable from commandline
+
+#+begin_src sh
+alias grass7=/Applications/GRASS-7.0.app/Contents/MacOS/grass.sh
+#+end_src
+
+*** COMMENT Emacs
+Not needed anymore as emacs and emacsclient in /usr/bin renamed to
+emacs.bak and emacsclient.bak redefine emacs to use new emacs but
+added for reference.
+
+#+begin_src sh
+alias emacs="/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs -nw"
+alias emacsclient="/usr/local/Cellar/emacs/24.3/bin/emacsclient"
+#+end_src
+
+** set PATH
+Finally (re)add ~/bin at first location in PATH
+
+#+begin_src sh
+export PATH=~/bin:$PATH
+#+end_src
+** Set EDITOR
+#+begin_src sh
+export EDITOR="emacs -Q"
+#+end_src
+
+
+** history options
+#+begin_src sh
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+#+end_src
+
+** COMMENT Infopath settings
+Not needed anymore - left for reference
+#+begin_src sh 
+export INFOPATH=~/.emacs.d/org-mode/doc:$INFOPATH
+export INFOPATH=~/.emacs.d/ess/doc:$INFOPATH
+export INFOPATH=$INFOPATH/
+#+end_src
+
+** org-mode aliases for agendas
+#+begin_src sh
+alias todo="emacs -batch -l ~/.emacs -eval '(org-batch-agenda \"t\")' 2> /dev/null "
+alias today="emacs -batch -l ~/.emacs -eval '(org-batch-agenda \"a\")' 2> /dev/null "
+#+end_src
+
+** COMMENT docker
+to ssh into a docker
+#+begin_src sh
+function docker_ssh() { ssh root@$(docker inspect $1 | grep IPAddr | sed -e ‘s/.*: “\(.*\)”.*/\1/’); }
+#+end_src
+** PROMPT
+set prompt for git
+See [[http://mediadoneright.com/content/ultimate-git-ps1-bash-prompt][ultimate git prompt]] For details
+Customize BASH PS1 prompt to show current GIT repository and branch.
+by Mike Stewart - http://MediaDoneRight.com [[http://MediaDoneRight.com][MediaDoneRight.com]] 
+#+begin_src sh
+source ~/.git-prompt.sh
+source ~/.git-completion.bash
+
+#  SETUP CONSTANTS
+#  Bunch-o-predefined colors.  Makes reading code easier than escape sequences.
+#  I don't remember where I found this.  o_O
+
+# original prompt
+# OrgPrompt="${debian_chroot:+($debian_chroot)}\u@\h:\w > "
+# export PS1=$OrgPrompt
+
+# Reset
+Color_Off="\[\033[0m\]"       # Text Reset
+  
+# Regular Colors
+Black="\[\033[0;30m\]"        # Black
+Red="\[\033[0;31m\]"          # Red
+Green="\[\033[0;32m\]"        # Green
+Yellow="\[\033[0;33m\]"       # Yellow
+Blue="\[\033[0;34m\]"         # Blue
+Purple="\[\033[0;35m\]"       # Purple
+Cyan="\[\033[0;36m\]"         # Cyan
+White="\[\033[0;37m\]"        # White
+
+# Bold
+BBlack="\[\033[1;30m\]"       # Black
+BRed="\[\033[1;31m\]"         # Red
+BGreen="\[\033[1;32m\]"       # Green
+BYellow="\[\033[1;33m\]"      # Yellow
+BBlue="\[\033[1;34m\]"        # Blue
+BPurple="\[\033[1;35m\]"      # Purple
+BCyan="\[\033[1;36m\]"        # Cyan
+BWhite="\[\033[1;37m\]"       # White
+
+# Underline
+UBlack="\[\033[4;30m\]"       # Black
+URed="\[\033[4;31m\]"         # Red
+UGreen="\[\033[4;32m\]"       # Green
+UYellow="\[\033[4;33m\]"      # Yellow
+UBlue="\[\033[4;34m\]"        # Blue
+UPurple="\[\033[4;35m\]"      # Purple
+UCyan="\[\033[4;36m\]"        # Cyan
+UWhite="\[\033[4;37m\]"       # White
+
+# Background
+On_Black="\[\033[40m\]"       # Black
+On_Red="\[\033[41m\]"         # Red
+On_Green="\[\033[42m\]"       # Green
+On_Yellow="\[\033[43m\]"      # Yellow
+On_Blue="\[\033[44m\]"        # Blue
+On_Purple="\[\033[45m\]"      # Purple
+On_Cyan="\[\033[46m\]"        # Cyan
+On_White="\[\033[47m\]"       # White
+
+# High Intensty
+IBlack="\[\033[0;90m\]"       # Black
+IRed="\[\033[0;91m\]"         # Red
+IGreen="\[\033[0;92m\]"       # Green
+IYellow="\[\033[0;93m\]"      # Yellow
+IBlue="\[\033[0;94m\]"        # Blue
+IPurple="\[\033[0;95m\]"      # Purple
+ICyan="\[\033[0;96m\]"        # Cyan
+IWhite="\[\033[0;97m\]"       # White
+
+# Bold High Intensty
+BIBlack="\[\033[1;90m\]"      # Black
+BIRed="\[\033[1;91m\]"        # Red
+BIGreen="\[\033[1;92m\]"      # Green
+BIYellow="\[\033[1;93m\]"     # Yellow
+BIBlue="\[\033[1;94m\]"       # Blue
+BIPurple="\[\033[1;95m\]"     # Purple
+BICyan="\[\033[1;96m\]"       # Cyan
+BIWhite="\[\033[1;97m\]"      # White
+
+# High Intensty backgrounds
+On_IBlack="\[\033[0;100m\]"   # Black
+On_IRed="\[\033[0;101m\]"     # Red
+On_IGreen="\[\033[0;102m\]"   # Green
+On_IYellow="\[\033[0;103m\]"  # Yellow
+On_IBlue="\[\033[0;104m\]"    # Blue
+On_IPurple="\[\033[10;95m\]"  # Purple
+On_ICyan="\[\033[0;106m\]"    # Cyan
+On_IWhite="\[\033[0;107m\]"   # White
+
+# Various variables you might want for your PS1 prompt instead
+Time12h="\T"
+Time12a="\@"
+PathShort="\w"
+PathFull="\W"
+NewLine="\n"
+Jobs="\j"
+
+# This PS1 snippet was adopted from code for MAC/BSD I saw from: http://allancraig.net/index.php?option=com_content&view=article&id=108:ps1-export-command-for-git&catid=45:general&Itemid=96
+# I tweaked it to work on UBUNTU 11.04 & 11.10 plus made it mo' better
+
+export PS1=$IBlack$Time12h$Color_Off'$(git branch &>/dev/null;\
+if [ $? -eq 0 ]; then \
+  echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
+  if [ "$?" -eq "0" ]; then \
+    # @4 - Clean repository - nothing to commit
+    echo "'$Green'"$(__git_ps1 " (%s)"); \
+  else \
+    # @5 - Changes to working tree
+    echo "'$IRed'"$(__git_ps1 " {%s}"); \
+  fi) '$BYellow$PathShort$Color_Off'\$ "; \
+else \
+  # @2 - Prompt when not in GIT repo
+  echo " '$Yellow$PathShort$Color_Off'\$ "; \
+fi)'
+#+end_src
+** Aliases
+#+begin_src sh
+alias ll='ls -lah'
+alias gg='git status -s'
+#+end_src
+** Make life fun
+#+begin_src sh
+alias cs='cowsay -f "$(ls -1 /usr/local/share/cows/ | rl --count=1)" "$(fortune -s)"'
+cs
+#+end_src
+
+** File local variables for the tangled file
+#+begin_src sh  :comments org
+## Local Variables:
+## buffer-read-only: t
+## eval:: (auto-revert-mode)
+## End:
+
+#+end_src
+
+
+* .bash_profile
+:PROPERTIES:
+:header-args+: :tangle ~/.bash_profile
+:END:
+
+** Read .bashrc
+This file is only read by login shells
+#+begin_src sh 
+if [ -f ~/.bashrc ]; then
+   source ~/.bashrc
+fi
+#+end_src
+** File local variables for the tangled file
+#+begin_src sh :comments org
+## Local Variables:
+## buffer-read-only: t
+## eval:: (auto-revert-mode)
+## End:
+
+#+end_src
