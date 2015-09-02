@@ -68,7 +68,7 @@ export CPLUS_INCLUDE_PATH=C_INCLUDE_PATH:/usr/local/include
 #+end_src
 
 
-*** homebrew - gdal-grass
+*** COMMENT homebrew - gdal-grass
 ## ==> Caveats
 ## This formula provides a plugin that allows GDAL and OGR to access geospatial
 ## data stored using the GRASS vector and raster formats. In order to use the
@@ -80,12 +80,6 @@ export CPLUS_INCLUDE_PATH=C_INCLUDE_PATH:/usr/local/include
 export GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins
 #+end_src
 
-*** grass 7
-make grass 7 startable from commandline
-
-#+begin_src sh
-alias grass7=/Applications/GRASS-7.0.app/Contents/MacOS/grass.sh
-#+end_src
 
 *** COMMENT Emacs
 Not needed anymore as emacs and emacsclient in /usr/bin renamed to
