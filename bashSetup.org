@@ -105,8 +105,11 @@ export EDITOR="emacs -Q"
 
 ** history options
 #+begin_src sh
-export HISTSIZE=100000
-export HISTFILESIZE=100000
+export HISTTIMEFORMAT='%F %T '           # show timestamp in history command
+export HISTCONTROL=ignoredups            # no consequtive duplicate entries
+export HISTSIZE=1000000                  # insanely big big history
+export HISTFILESIZE=1000000              # insanely big big history
+shopt -s histappend
 #+end_src
 
 ** COMMENT Infopath settings
@@ -245,10 +248,38 @@ else \
 fi)'
 #+end_src
 ** Aliases
+*** General
 #+begin_src sh
 alias ll='ls -lah'
+#+end_src
+*** Git
+#+begin_src sh
 alias gg='git status -s'
 #+end_src
+*** Homebrew aliases
+**** Improved leaves 
+List all leaves and their dependencies. Based on
+[[http://zanshin.net/2014/02/03/how-to-list-brew-dependencies/]]
+#+begin_src sh 
+alias brewLeaves='brew leaves | while read cask; do let var=var+1 && echo -en "$var \033[1m$cask \033[0m \033[34mDEPENDS ON: \033[0m"; brew deps $cask | awk '"'"'{printf(" \033[4m%s\033[0m  ", $0)}'"'"'; echo ""; done'  
+#+end_src
+
+**** Improved list
+List all installed recipes and their reverse-dependencies. See
+[[http://stackoverflow.com/questions/28892546/is-var-0-a-valid-expression-in-bash]]
+#+begin_src sh 
+alias brewUses='brew list | while read cask; do let var=var+1 && echo -en "$var\033[1m $cask \033[0m \033[34mUSED BY : \033[0m"; brew uses --installed $cask | awk '"'"'{printf "  \033[4m%s\033[0m  ", $0}'"'"'; echo ""; done' 
+#+end_src
+
+** Enable color for ls
+#+begin_src sh 
+  export CLICOLOR=1
+  ## light background
+  ## export LSCOLORS=ExFxCxDxBxegedabagacad
+  ## Black background
+  export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+#+end_src
+
 ** Make life fun
 #+begin_src sh
 alias cs='cowsay -f "$(ls -1 /usr/local/share/cows/ | rl --count=1)" "$(fortune -s)"'
