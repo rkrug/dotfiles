@@ -106,7 +106,7 @@ systems.
 #+END_QUOTE
 See [[https://tug.org/mactex/UpdatingForElCapitan.pdf]] for details
 #+begin_src sh
-export PATH=/Library/TeX/texbin:/Library/TeX/Distributions/Programs/texbin:$PATH\
+export PATH=/Library/TeX/texbin:$PATH\
 #+end_src
 ** set PATH
 Finally (re)add ~/bin at first location in PATH
