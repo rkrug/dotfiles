@@ -91,6 +91,23 @@ alias emacs="/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs -nw"
 alias emacsclient="/usr/local/Cellar/emacs/24.3/bin/emacsclient"
 #+end_src
 
+** MacTex
+From [[https://tug.org/mactex/mactex-download.html]] (this will not be
+avaiulable after the new release I guess...):
+
+#+BEGIN_QUOTE
+MacTeX installs the link /usr/texbin, pointing indirectly to the
+binaries of TeX Live. In El Capitan, users cannot write to the
+location /usr, even if they have Administrator
+permission. Consequently, MacTeX-2015 and BasicTeX-2015 install two
+symbolic links on all systems earlier than El Capitan: /usr/texbin and
+/Library/TeX/texbin. Only the second link is installed on future
+systems.
+#+END_QUOTE
+See [[https://tug.org/mactex/UpdatingForElCapitan.pdf]] for details
+#+begin_src sh
+export PATH=/Library/TeX/texbin:/Library/TeX/Distributions/Programs/texbin:$PATH\
+#+end_src
 ** set PATH
 Finally (re)add ~/bin at first location in PATH
 
@@ -258,15 +275,13 @@ alias gg='git status -s'
 #+end_src
 *** Homebrew aliases
 **** Improved leaves 
-List all leaves and their dependencies. Based on
-[[http://zanshin.net/2014/02/03/how-to-list-brew-dependencies/]]
+List all leaves and their dependencies. Based on [[http://zanshin.net/2014/02/03/how-to-list-brew-dependencies/]]
 #+begin_src sh 
 alias brewLeaves='brew leaves | while read cask; do let var=var+1 && echo -en "$var \033[1m$cask \033[0m \033[34mDEPENDS ON: \033[0m"; brew deps $cask | awk '"'"'{printf(" \033[4m%s\033[0m  ", $0)}'"'"'; echo ""; done'  
 #+end_src
 
 **** Improved list
-List all installed recipes and their reverse-dependencies. See
-[[http://stackoverflow.com/questions/28892546/is-var-0-a-valid-expression-in-bash]]
+List all installed recipes and their reverse-dependencies. See [[http://stackoverflow.com/questions/28892546/is-var-0-a-valid-expression-in-bash]]
 #+begin_src sh 
 alias brewUses='brew list | while read cask; do let var=var+1 && echo -en "$var\033[1m $cask \033[0m \033[34mUSED BY : \033[0m"; brew uses --installed $cask | awk '"'"'{printf "  \033[4m%s\033[0m  ", $0}'"'"'; echo ""; done' 
 #+end_src
