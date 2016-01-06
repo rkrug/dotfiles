@@ -45,7 +45,7 @@ export LANG=en_US.UTF-8
 ** Homebrew 
 *** GITHUB_API_TOKEN
 #+begin_src sh
-export HOMEBREW_GITHUB_API_TOKEN=6fb92887ac7d8317656501ec1193e05e0f360d01
+export HOMEBREW_GITHUB_API_TOKEN=`cat ~/.HOMEBREW_GITHUB_API_TOKEN`
 #+end_src
 *** bash completion
 #+begin_src sh
@@ -106,7 +106,7 @@ systems.
 #+END_QUOTE
 See [[https://tug.org/mactex/UpdatingForElCapitan.pdf]] for details
 #+begin_src sh
-export PATH=/Library/TeX/texbin:$PATH\
+export PATH=/Library/TeX/texbin:$PATH
 #+end_src
 ** set PATH
 Finally (re)add ~/bin at first location in PATH
